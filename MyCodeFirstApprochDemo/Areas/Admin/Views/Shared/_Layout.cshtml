@@ -1,0 +1,173 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="ThemeBucket">
+    <link rel="shortcut icon" href="~/Admin/images/favicon.png">
+    <title>@ViewBag.Title - Quản trị</title>
+
+    <!--Core CSS -->
+    <link href="~/Admin/bs3/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/Admin/js/jquery-ui/jquery-ui-1.10.1.custom.min.css" rel="stylesheet">
+    <link href="~/Admin/css/bootstrap-reset.css" rel="stylesheet">
+    <link href="~/Admin/font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link href="~/Admin/js/jvector-map/jquery-jvectormap-1.2.2.css" rel="stylesheet">
+    <link href="~/Admin/css/clndr.css" rel="stylesheet">
+    <!--clock css-->
+    <link href="~/Admin/js/css3clock/css/style.css" rel="stylesheet">
+    <!--Morris Chart CSS -->
+    @*<link rel="~/Admin/stylesheet" href="js/morris-chart/morris.css">*@
+    <!-- Custom styles for this template -->
+    <link href="~/Admin/css/style.css" rel="stylesheet">
+    <link href="~/Admin/css/style-responsive.css" rel="stylesheet" />
+</head>
+<body>
+    <section id="container">
+        <!--header start-->
+        @Html.Partial("_Header")
+        <!--header end-->
+        <!--sidebar start-->
+        <aside>
+            <div id="sidebar" class="nav-collapse">
+                <!-- sidebar menu start-->
+                @Html.Partial("_MenuLeft")
+                <!-- sidebar menu end-->
+            </div>
+        </aside>
+        <!--sidebar end-->
+        <!--main content start-->
+        <section id="main-content">
+            <section class="wrapper">
+
+                <!--mini statistics start-->
+                <div class="row" style="display:none">
+                    <div class="col-md-3">
+                        <section class="panel">
+                            <div class="panel-body">
+                                <div class="top-stats-panel">
+                                    <div class="gauge-canvas">
+                                        <h4 class="widget-h">Monthly Expense</h4>
+                                        <canvas width=160 height=100 id="gauge"></canvas>
+                                    </div>
+                                    <ul class="gauge-meta clearfix">
+                                        <li id="gauge-textfield" class="pull-left gauge-value"></li>
+                                        <li class="pull-right gauge-title">Safe</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                    <div class="col-md-3">
+                        <section class="panel">
+                            <div class="panel-body">
+                                <div class="top-stats-panel">
+                                    <div class="daily-visit">
+                                        <h4 class="widget-h">Daily Visitors</h4>
+                                        <div id="daily-visit-chart" style="width:100%; height: 100px; display: block">
+                                        </div>
+                                        <ul class="chart-meta clearfix">
+                                            <li class="pull-left visit-chart-value">3233</li>
+                                            <li class="pull-right visit-chart-title"><i class="fa fa-arrow-up"></i> 15%</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                    <div class="col-md-3">
+                        <section class="panel">
+                            <div class="panel-body">
+                                <div class="top-stats-panel">
+                                    <h4 class="widget-h">Top Advertise</h4>
+                                    <div class="sm-pie">
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                    <div class="col-md-3">
+                        <section class="panel">
+                            <div class="panel-body">
+                                <div class="top-stats-panel">
+                                    <h4 class="widget-h">Daily Sales</h4>
+                                    <div class="bar-stats">
+                                        <ul class="progress-stat-bar clearfix">
+                                            <li data-percent="50%"><span class="progress-stat-percent pink"></span></li>
+                                            <li data-percent="90%"><span class="progress-stat-percent"></span></li>
+                                            <li data-percent="70%"><span class="progress-stat-percent yellow-b"></span></li>
+                                        </ul>
+                                        <ul class="bar-legend">
+                                            <li><span class="bar-legend-pointer pink"></span> New York</li>
+                                            <li><span class="bar-legend-pointer green"></span> Los Angels</li>
+                                            <li><span class="bar-legend-pointer yellow-b"></span> Dallas</li>
+                                        </ul>
+                                        <div class="daily-sales-info">
+                                            <span class="sales-count">1200 </span> <span class="sales-label">Products Sold</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+                <!--mini statistics end-->
+                <div class="row">
+                    <div class="col-md-12">
+                        <section class="panel">
+                            <div class="panel-body">
+                                @RenderBody()
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </section>
+        </section>
+        <!--main content end-->
+        <!--right sidebar start-->
+        @Html.Partial("_MenuRight")
+        <!--right sidebar end-->
+    </section>
+    <!-- Placed js at the end of the document so the pages load faster -->
+    <!--Core js-->
+    <script src="~/Admin/js/jquery.js"></script>
+    <script src="~/Admin/js/jquery-ui/jquery-ui-1.10.1.custom.min.js"></script>
+    <script src="~/Admin/bs3/js/bootstrap.min.js"></script>
+    <script src="~/Admin/js/jquery.dcjqaccordion.2.7.js"></script>
+    <script src="~/Admin/js/jquery.scrollTo.min.js"></script>
+    <script src="~/Admin/js/jQuery-slimScroll-1.3.0/jquery.slimscroll.js"></script>
+    <script src="~/Admin/js/jquery.nicescroll.js"></script>
+    <script src="~/Admin/js/skycons/skycons.js"></script>
+    <script src="~/Admin/js/jquery.scrollTo/jquery.scrollTo.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+    <script src="~/Admin/js/calendar/clndr.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.2/underscore-min.js"></script>
+    <script src="~/Admin/js/calendar/moment-2.2.1.js"></script>
+    <script src="~/Admin/js/evnt.calendar.init.js"></script>
+    <script src="~/Admin/js/jvector-map/jquery-jvectormap-1.2.2.min.js"></script>
+    <script src="~/Admin/js/jvector-map/jquery-jvectormap-us-lcc-en.js"></script>
+    <script src="~/Admin/js/gauge/gauge.js"></script>
+    <!--clock init-->
+    <script src="~/Admin/js/css3clock/js/css3clock.js"></script>
+    <!--Easy Pie Chart-->
+    <script src="~/Admin/js/easypiechart/jquery.easypiechart.js"></script>
+    <!--Sparkline Chart-->
+    <script src="~/Admin/js/sparkline/jquery.sparkline.js"></script>
+    <!--Morris Chart-->
+    @*    <script src="~/Admin/js/morris-chart/morris.js"></script>
+    <script src="~/Admin/js/morris-chart/raphael-min.js"></script>*@
+    <!--jQuery Flot Chart-->
+    <script src="~/Admin/js/flot-chart/jquery.flot.js"></script>
+    <script src="~/Admin/js/flot-chart/jquery.flot.tooltip.min.js"></script>
+    <script src="~/Admin/js/flot-chart/jquery.flot.resize.js"></script>
+    <script src="~/Admin/js/flot-chart/jquery.flot.pie.resize.js"></script>
+    <script src="~/Admin/js/flot-chart/jquery.flot.animator.min.js"></script>
+    <script src="~/Admin/js/flot-chart/jquery.flot.growraf.js"></script>
+    <script src="~/Admin/js/dashboard.js"></script>
+    <script src="~/Admin/js/jquery.customSelect.min.js"></script>
+    <!--common script init for all pages-->
+    <script src="~/Admin/js/scripts.js"></script>
+    <!--script for this page-->
+</body>
+</html>

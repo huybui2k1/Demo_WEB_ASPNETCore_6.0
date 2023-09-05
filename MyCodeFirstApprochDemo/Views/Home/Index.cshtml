@@ -1,0 +1,18 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    @{
+        if (@TempData["Message"] != null)
+        {
+            <div class="alert alert-danger alert-dismissible fade show">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                @TempData["Message"]
+            </div>
+        }
+    }
+    <h1 class="display-4">Welcome @ViewData["MessageInfo"]</h1>
+
+
+</div>
