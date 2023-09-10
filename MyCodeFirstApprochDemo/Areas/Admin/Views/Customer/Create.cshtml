@@ -1,0 +1,47 @@
+﻿@model DemoApproachLibrary.DataAccess.KhachHang
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Areas/admin/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Tạo mới khách hàng</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        @using (Html.BeginForm("Create", "Customer", FormMethod.Post))
+        {
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <label asp-for="TenKhachHang" class="control-label"></label>
+                @Html.EditorFor(model=>model.TenKhachHang,new {htmlAttributes= new{@class="form-control", @placeholder="Mời nhập tên khách hàng"} })
+
+                <span asp-validation-for="TenKhachHang" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DiaChi" class="control-label"></label>
+                @Html.EditorFor(model=>model.DiaChi,new {htmlAttributes= new{@class="form-control", @placeholder="Mời nhập địa chỉ"} })
+                <span asp-validation-for="DiaChi" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DienThoai" class="control-label"></label>
+                @Html.EditorFor(model=>model.DienThoai,new {htmlAttributes= new{@class="form-control", @placeholder="Mời nhập điện thoại"} })
+                <span asp-validation-for="DienThoai" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+            @* </form>*@
+        }
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
