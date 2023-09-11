@@ -1,0 +1,125 @@
+﻿@using X.PagedList.Mvc.Core;
+@using X.PagedList;
+@model IEnumerable<DemoApproachLibrary.DataAccess.NhanVien>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/admin/Views/Shared/_Layout.cshtml";
+}
+
+<header class="panel-heading">
+    Quản lý Nhân Viên
+</header>
+<div class="panel-body">
+<p>
+        @Html.ActionLink("Tạo mới","Create","Staff", null, new {@class="btn btn-danger"})
+</p>
+<div class="row form-body">
+    <div class="form-group mb-4">
+        @using (Html.BeginForm("Index", "Staff", FormMethod.Get))
+        {
+                <div class="row col-lg-6">
+                @Html.TextBox("SearchString",null,null,new {@class="form-control", @placeholder="Nhập từ khoá cần tìm kiếm"})
+            </div>
+
+            <div class="col-lg-6">
+                <input type="submit" class="btn btn-danger" value="Tìm kiếm" />
+            </div
+            <div style="clear: both"></div>
+        }
+        </div>
+         @using (Html.BeginForm("DeleteMultiple", "Staff", FormMethod.Post))
+        {
+<div class="form-group">
+<table class="table table-striped">
+    <thead>
+        <tr>
+                    <th>
+                        @{
+                            var sortBy = Context.Request.Query["sortby"] == "id" ? "iddesc" : "id";
+                        }
+                        <a href="@Url.Action("Index","Staff",new {sortBy=sortBy,SearchString=@Context.Request.Query["SearchString"]})">
+                            @Html.DisplayNameFor(model => model.MaNhanVien)
+                        </a>
+                    </th>
+                     <th>
+
+                        @{
+                            sortBy = Context.Request.Query["sortby"] == "name" ? "namedesc" : "name";
+                        }
+                                    <a href="@Url.Action("Index","Staff",new {sortBy=sortBy,SearchString=@Context.Request.Query["SearchString"]})">
+                            @Html.DisplayNameFor(model => model.TenNhanVien)
+                                    </a>
+                                </th>
+            <th>
+                @Html.DisplayNameFor(model => model.GioiTinh)
+            </th>
+                    <th>
+                        @{
+                            sortBy = Context.Request.Query["sortby"] == "address" ? "addressdesc" : "address";
+                        }
+                                     <a href="@Url.Action("Index","Staff",new {sortBy=sortBy,SearchString=@Context.Request.Query["SearchString"]})">
+                            @Html.DisplayNameFor(model => model.DiaChi)
+                                    </a>
+                                </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DienThoai)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NgaySinh)
+            </th>
+                    <th>
+                        Chức năng
+                    </th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null)
+                {
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.MaNhanVien)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.TenNhanVien)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.GioiTinh)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.DiaChi)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.DienThoai)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.NgaySinh)
+                            </td>
+                            <td>
+                                <input type="checkbox" name="SelectedCatDelete" value="@item.MaNhanVien">
+                                @Html.ActionLink("Sửa", "Edit", new {  id=item.MaNhanVien  },new {@class="text-danger"}) |
+                                @Html.ActionLink("Chi tiết", "Details", new { /* id=item.PrimaryKey */ }) |
+                                @Html.ActionLink("Xoá", "Delete", new {id=item.MaNhanVien },new {@class="text-danger"})
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+</table>
+</div>
+ <div class="form-group">
+                   <button type="submit" class="btn btn-danger">Delete Selected Rows</button>
+                 </div>
+        }
+        <div class="form-group">
+                 @Html.PagedListPager((IPagedList) Model, page => Url.Action("Index", new {page = page,
+                SearchString = @Context.Request.Query["SearchString"],sortby = @Context.Request.Query["sortby"]}),
+                new X.PagedList.Web.Common.PagedListRenderOptions {
+                 LiElementClasses = new string[] {"page-item"},
+                 PageClasses = new string[] { "page-link" }
+                })
+</div>
+</div>
+</div>
