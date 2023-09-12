@@ -5,13 +5,13 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace DemoApproachLibrary.DataAccess
 {
-    public partial class QLBHTestContext : DbContext
+    public partial class MyStockContext : DbContext
     {
-        public QLBHTestContext()
+        public MyStockContext()
         {
         }
 
-        public QLBHTestContext(DbContextOptions<QLBHTestContext> options)
+        public MyStockContext(DbContextOptions<MyStockContext> options)
             : base(options)
         {
         }
@@ -29,7 +29,7 @@ namespace DemoApproachLibrary.DataAccess
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Data Source=DESKTOP-HS7UVTQ ; Database=QLBHTest;TrustServerCertificate=true;Trusted_Connection=SSPI;Encrypt=false;");
+                optionsBuilder.UseSqlServer("Data Source=DESKTOP-HS7UVTQ ; Database=MyStock;TrustServerCertificate=true;Trusted_Connection=SSPI;Encrypt=false;");
             }
         }
 
@@ -37,13 +37,7 @@ namespace DemoApproachLibrary.DataAccess
         {
             modelBuilder.Entity<Car>(entity =>
             {
-                entity.HasNoKey();
-
-                entity.ToTable("Car");
-
-                entity.Property(e => e.CarId)
-                    .ValueGeneratedOnAdd()
-                    .HasColumnName("CarID");
+                entity.Property(e => e.CarId).HasColumnName("CarID");
 
                 entity.Property(e => e.CarName)
                     .HasMaxLength(50)
@@ -58,9 +52,11 @@ namespace DemoApproachLibrary.DataAccess
 
             modelBuilder.Entity<ChiTietHoaDon>(entity =>
             {
-                entity.HasKey(e => new { e.MaHoaDon, e.MaHangHoa });
+                entity.HasKey(e => new { e.MaHoaDon, e.MaHang });
 
                 entity.ToTable("ChiTietHoaDon");
+
+                entity.Property(e => e.MaHang).ValueGeneratedOnAdd();
 
                 entity.Property(e => e.DonGia).HasColumnType("decimal(18, 0)");
 
@@ -68,9 +64,9 @@ namespace DemoApproachLibrary.DataAccess
 
                 entity.Property(e => e.ThanhTien).HasColumnType("decimal(18, 0)");
 
-                entity.HasOne(d => d.MaHangHoaNavigation)
+                entity.HasOne(d => d.MaHangNavigation)
                     .WithMany(p => p.ChiTietHoaDons)
-                    .HasForeignKey(d => d.MaHangHoa)
+                    .HasForeignKey(d => d.MaHang)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_ChiTietHoaDon_HangHoa");
 
@@ -87,8 +83,6 @@ namespace DemoApproachLibrary.DataAccess
 
                 entity.ToTable("HangHoa");
 
-                entity.Property(e => e.MaHangHoa).ValueGeneratedNever();
-
                 entity.Property(e => e.Anh)
                     .HasMaxLength(50)
                     .IsUnicode(false);
@@ -104,12 +98,9 @@ namespace DemoApproachLibrary.DataAccess
 
             modelBuilder.Entity<HoaDon>(entity =>
             {
-                entity.HasKey(e => e.MaHoaDon)
-                    .HasName("PK_HoaDon_1");
+                entity.HasKey(e => e.MaHoaDon);
 
                 entity.ToTable("HoaDon");
-
-                entity.Property(e => e.MaHoaDon).ValueGeneratedNever();
 
                 entity.Property(e => e.NgayBan).HasColumnType("datetime");
 
@@ -133,8 +124,6 @@ namespace DemoApproachLibrary.DataAccess
                 entity.HasKey(e => e.MaKhachHang);
 
                 entity.ToTable("KhachHang");
-
-                entity.Property(e => e.MaKhachHang).ValueGeneratedNever();
 
                 entity.Property(e => e.DiaChi).HasMaxLength(200);
 
@@ -165,8 +154,6 @@ namespace DemoApproachLibrary.DataAccess
                 entity.HasKey(e => e.MaNhanVien);
 
                 entity.ToTable("NhanVien");
-
-                entity.Property(e => e.MaNhanVien).ValueGeneratedNever();
 
                 entity.Property(e => e.DiaChi).HasMaxLength(200);
 

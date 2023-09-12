@@ -39,7 +39,7 @@ namespace DemoApproachLibrary.DataAccess
             /*var khachHangs = new List<KhachHang>();
             try
             {
-                using var context = new QLBHTestContext();
+                using var context = new MyStockContext();
                 khachHangs = context.KhachHangs.ToList();
             }
             catch (Exception ex)
@@ -50,7 +50,7 @@ namespace DemoApproachLibrary.DataAccess
 
 
             ///ham sort by name 
-            using var context = new QLBHTestContext();
+            using var context = new MyStockContext();
             List<NhanVien> model = context.NhanViens.ToList();
             try
             {
@@ -90,7 +90,7 @@ namespace DemoApproachLibrary.DataAccess
             NhanVien kh = null;
             try
             {
-                using var context = new QLBHTestContext();
+                using var context = new MyStockContext();
                 kh = context.NhanViens.SingleOrDefault(k => k.MaNhanVien == id);
             }
             catch (Exception ex)
@@ -102,7 +102,7 @@ namespace DemoApproachLibrary.DataAccess
 
         public IEnumerable<NhanVien> GetNhanVienBySearchName(string name, string sortBy)
         {
-            /* var context = new QLBHTestContext();
+            /* var context = new MyStockContext();
              *//*var khachHangs = new List<KhachHang>();*//*
              IQueryable<KhachHang> model = context.KhachHangs;
              try
@@ -123,7 +123,7 @@ namespace DemoApproachLibrary.DataAccess
              return model;*/
 
             //ham sort by name  
-            var context = new QLBHTestContext();
+            var context = new MyStockContext();
             /*var khachHangs = new List<KhachHang>();*/
             List<NhanVien> model = context.NhanViens.ToList();
 
@@ -177,7 +177,7 @@ namespace DemoApproachLibrary.DataAccess
                 NhanVien _kh = GetNhanVienByID(kh.MaNhanVien);
                 if (_kh == null)
                 {
-                    using var context = new QLBHTestContext();
+                    using var context = new MyStockContext();
                     context.NhanViens.Add(kh);
                     context.SaveChanges();
                 }
@@ -200,7 +200,7 @@ namespace DemoApproachLibrary.DataAccess
                 NhanVien _kh = GetNhanVienByID(kh.MaNhanVien);
                 if (_kh != null)
                 {
-                    using var context = new QLBHTestContext();
+                    using var context = new MyStockContext();
                     context.NhanViens.Update(kh);
                     context.SaveChanges();
                 }
@@ -222,7 +222,7 @@ namespace DemoApproachLibrary.DataAccess
                 NhanVien _kh = GetNhanVienByID(id);
                 if (_kh != null)
                 {
-                    using var context = new QLBHTestContext();
+                    using var context = new MyStockContext();
                     context.NhanViens.Remove(_kh);
                     context.SaveChanges();
                 }
@@ -238,11 +238,12 @@ namespace DemoApproachLibrary.DataAccess
         }
         public IEnumerable<NhanVien> RemoveNhanVienSelected(IEnumerable<int> DeleteList)
         {
-            using var context = new QLBHTestContext();
+            using var context = new MyStockContext();
             var DeleteCatList = context.NhanViens.Where(z => DeleteList.Contains(z.MaNhanVien)).ToList();
             context.NhanViens.RemoveRange(DeleteCatList);
             context.SaveChanges();
             return DeleteCatList;
         }
-    }
+    
+}
 }

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -40,7 +39,7 @@ namespace DemoApproachLibrary.DataAccess
             /*var khachHangs = new List<KhachHang>();
             try
             {
-                using var context = new QLBHTestContext();
+                using var context = new MyStockContext();
                 khachHangs = context.KhachHangs.ToList();
             }
             catch (Exception ex)
@@ -51,7 +50,7 @@ namespace DemoApproachLibrary.DataAccess
 
 
             ///ham sort by name 
-            using var context = new QLBHTestContext();
+            using var context = new MyStockContext();
             List<KhachHang> model = context.KhachHangs.ToList();
             try
             {
@@ -91,7 +90,7 @@ namespace DemoApproachLibrary.DataAccess
             KhachHang kh = null;
             try
             {
-                using var context = new QLBHTestContext();
+                using var context = new MyStockContext();
                 kh = context.KhachHangs.SingleOrDefault(k => k.MaKhachHang == id);
             }
             catch (Exception ex)
@@ -103,7 +102,7 @@ namespace DemoApproachLibrary.DataAccess
 
         public IEnumerable<KhachHang> GetKhachHangBySearchName(string name, string sortBy)
         {
-            /* var context = new QLBHTestContext();
+            /* var context = new MyStockContext();
              *//*var khachHangs = new List<KhachHang>();*//*
              IQueryable<KhachHang> model = context.KhachHangs;
              try
@@ -124,7 +123,7 @@ namespace DemoApproachLibrary.DataAccess
              return model;*/
 
             //ham sort by name  
-            var context = new QLBHTestContext();
+            var context = new MyStockContext();
             /*var khachHangs = new List<KhachHang>();*/
             List<KhachHang> model = context.KhachHangs.ToList();
 
@@ -178,7 +177,7 @@ namespace DemoApproachLibrary.DataAccess
                 KhachHang _kh = GetKhachHangByID(kh.MaKhachHang);
                 if (_kh == null)
                 {
-                    using var context = new QLBHTestContext();
+                    using var context = new MyStockContext();
                     context.KhachHangs.Add(kh);
                     context.SaveChanges();
                 }
@@ -201,7 +200,7 @@ namespace DemoApproachLibrary.DataAccess
                 KhachHang _kh = GetKhachHangByID(kh.MaKhachHang);
                 if (_kh != null)
                 {
-                    using var context = new QLBHTestContext();
+                    using var context = new MyStockContext();
                     context.KhachHangs.Update(kh);
                     context.SaveChanges();
                 }
@@ -223,7 +222,7 @@ namespace DemoApproachLibrary.DataAccess
                 KhachHang _kh = GetKhachHangByID(id);
                 if (_kh != null)
                 {
-                    using var context = new QLBHTestContext();
+                    using var context = new MyStockContext();
                     context.KhachHangs.Remove(_kh);
                     context.SaveChanges();
                 }
@@ -239,11 +238,12 @@ namespace DemoApproachLibrary.DataAccess
         }
         public IEnumerable<KhachHang> RemoveKhachHangSelected(IEnumerable<int> DeleteList)
         {
-            using var context = new QLBHTestContext();
-            var DeleteCatList = context.KhachHangs.Where(z=> DeleteList.Contains(z.MaKhachHang)).ToList();
+            using var context = new MyStockContext();
+            var DeleteCatList = context.KhachHangs.Where(z => DeleteList.Contains(z.MaKhachHang)).ToList();
             context.KhachHangs.RemoveRange(DeleteCatList);
             context.SaveChanges();
             return DeleteCatList;
         }
-    }
+    
+}
 }

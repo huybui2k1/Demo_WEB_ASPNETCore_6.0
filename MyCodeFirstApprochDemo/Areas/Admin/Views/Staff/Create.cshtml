@@ -12,12 +12,12 @@
         {
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-            <div class="form-group">
+            @*<div class="form-group">
                 <label asp-for="MaNhanVien" class="control-label"></label>
                 @Html.EditorFor(model=>model.MaNhanVien,new {htmlAttributes= new{@class="form-control", @placeholder="Mời nhập mã nhân viên"} })
 
                 <span asp-validation-for="MaNhanVien" class="text-danger"></span>
-            </div>
+            </div>*@
             <div class="form-group">
                 <label asp-for="TenNhanVien" class="control-label"></label>
                 @Html.EditorFor(model=>model.TenNhanVien,new {htmlAttributes= new{@class="form-control", @placeholder="Mời nhập tên nhân viên"} })
