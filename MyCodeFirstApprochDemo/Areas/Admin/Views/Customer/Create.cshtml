@@ -10,31 +10,32 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        @using (Html.BeginForm("Create", "Customer", FormMethod.Post))
+        @using (Html.BeginForm("Tạo mới", "Customer", FormMethod.Post))
         {
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-           @* <div class="form-group">
+            <div class="form-group">
                 <label asp-for="MaKhachHang" class="control-label"></label>
                 @Html.EditorFor(model=>model.MaKhachHang,new {htmlAttributes= new{@class="form-control", @placeholder="Mời nhập mã khách hàng"} })
-
+                @Html.ValidationMessageFor(model=> model.MaKhachHang,"",new {@class = "text-danger"})
                 <span asp-validation-for="MaKhachHang" class="text-danger"></span>
-            </div>*@
-
+            </div>
             <div class="form-group">
                 <label asp-for="TenKhachHang" class="control-label"></label>
                 @Html.EditorFor(model=>model.TenKhachHang,new {htmlAttributes= new{@class="form-control", @placeholder="Mời nhập tên khách hàng"} })
-
+                @Html.ValidationMessageFor(model=> model.TenKhachHang,"",new {@class = "text-danger"})
                 <span asp-validation-for="TenKhachHang" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="DiaChi" class="control-label"></label>
                 @Html.EditorFor(model=>model.DiaChi,new {htmlAttributes= new{@class="form-control", @placeholder="Mời nhập địa chỉ"} })
+                @Html.ValidationMessageFor(model=> model.DiaChi,"",new {@class = "text-danger"})
                 <span asp-validation-for="DiaChi" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="DienThoai" class="control-label"></label>
                 @Html.EditorFor(model=>model.DienThoai,new {htmlAttributes= new{@class="form-control", @placeholder="Mời nhập điện thoại"} })
+                @Html.ValidationMessageFor(model=> model.DienThoai,"",new {@class = "text-danger"})
                 <span asp-validation-for="DienThoai" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -46,7 +47,7 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    @Html.ActionLink("Quay trở lại","Index","Customer",null, new {@class="btn btn-danger"})
 </div>
 
 @section Scripts {

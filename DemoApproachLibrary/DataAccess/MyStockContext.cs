@@ -136,15 +136,15 @@ namespace DemoApproachLibrary.DataAccess
 
             modelBuilder.Entity<NguoiDung>(entity =>
             {
-                entity.HasNoKey();
+                entity.HasKey(e => e.TenDangNhap);
 
                 entity.ToTable("NguoiDung");
 
-                entity.Property(e => e.MatKhau)
+                entity.Property(e => e.TenDangNhap)
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
-                entity.Property(e => e.TenDangNhap)
+                entity.Property(e => e.MatKhau)
                     .HasMaxLength(50)
                     .IsUnicode(false);
             });

@@ -15,7 +15,7 @@ namespace MyCodeFirstApprochDemo.Controllers
             ViewData["Title"] = "Đăng nhập";
             LoginModel model = new LoginModel();
             model.UserName = "admin";
-            model.Password = "admin";
+            model.Password = "12345";
             model.ReturnUrl = ReturnUrl;
             return View(model);
         }
@@ -48,7 +48,7 @@ namespace MyCodeFirstApprochDemo.Controllers
                 {
                     return RedirectToAction("Login");
                 }
-                if (!(username.Contains("admin") && password.Contains("admin")))
+                if (!(username.Contains("admin") && password.Contains("12345")))
                 {
                     //TempData["Error"] = "Tên đăng nhập hoặc mật khẩu không đúng.";
                     ModelState.AddModelError("", "Tên đăng nhập hoặc mật khẩu không đúng.");

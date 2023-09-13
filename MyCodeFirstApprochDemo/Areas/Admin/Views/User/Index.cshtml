@@ -1,0 +1,115 @@
+﻿@using X.PagedList;
+@using X.PagedList.Mvc.Core;
+@model IEnumerable<DemoApproachLibrary.DataAccess.NguoiDung>
+
+@{
+    ViewData["Title"] = "QL Người Dùng";
+    Layout = "~/Areas/admin/Views/Shared/_Layout.cshtml";
+}
+
+<header class="panel-heading">
+    Quản lý Người Dùng
+</header>
+<div class="panel-body">
+
+    <p>
+        @Html.ActionLink("Tạo mới","Create","User", null, new {@class="btn btn-danger"})
+    </p>
+    @*<div class="text-align">
+         @if (TempData["Message"] != null)
+        {
+        <div class="alert alert-danger">
+
+        @TempData["Message"]
+        </div>
+        }
+    </div>*@
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+               Tên Đăng Nhập
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MatKhau)
+            </th>
+            <th>
+                Loại Người Dùng
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MaNguoiDung)
+            </th>
+            <th>
+                Giới tính
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.TenDangNhap)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MatKhau)
+            </td>
+            <td>
+                        @{
+                            var loaiNguoiDung = item.LoaiNguoiDung;
+                            var mau="";
+                            var tenLoai = "";
+                            switch (loaiNguoiDung)
+                            {
+                                case 1: 
+                                    mau = "red";
+                                    tenLoai = "Quản trị";
+                                    break;
+                                case 2:     
+                                    mau = "blue";
+                                    tenLoai = "Nhân Viên";
+                                    break;
+                                    default:
+                                    tenLoai = "Chưa xác đinh";
+                                    break;
+                            }
+                        }
+                        <font color=@mau>
+                            @tenLoai
+                        </font>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MaNguoiDung)
+            </td>
+            <td>
+                        @{
+                            var gender = item.Status;
+                            var icon = "";
+                            if (gender)
+                            {
+                                icon = "male";
+                            }
+                            else
+                            {
+                                icon = "female";
+                            }
+                        }
+                        <i class="fa fa-male"></i>
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+ <div class="form-group">
+        @Html.PagedListPager((IPagedList) Model, page => Url.Action("Index", new {page = page,
+                SearchString = @Context.Request.Query["SearchString"],sortby = @Context.Request.Query["sortby"]}),
+                new X.PagedList.Web.Common.PagedListRenderOptions {
+                 LiElementClasses = new string[] {"page-item"},
+                 PageClasses = new string[] { "page-link" }
+})
+    </div>

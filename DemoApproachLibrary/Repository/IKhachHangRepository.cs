@@ -1,4 +1,5 @@
 ﻿
+
 using DemoApproachLibrary.DataAccess;
 using System;
 using System.Collections.Generic;
@@ -12,7 +13,7 @@ namespace DemoApproachLibrary.Repository
     {
 
         IEnumerable<KhachHang> GetKhachHangs(string sortBy);
-        IEnumerable<KhachHang> GetKhachHangByName(string name, string sortBy);
+        IEnumerable<KhachHang> GetKhachHangByName(string name, string CityName, string sortBy);
         KhachHang GetKhachHangByID(int id);
         void InsertKhachHang(KhachHang kh);
         void UpdateKhachHang(KhachHang kh);

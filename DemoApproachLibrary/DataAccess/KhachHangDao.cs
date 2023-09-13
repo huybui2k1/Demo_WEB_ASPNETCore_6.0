@@ -100,7 +100,7 @@ namespace DemoApproachLibrary.DataAccess
             return kh;
         }
 
-        public IEnumerable<KhachHang> GetKhachHangBySearchName(string name, string sortBy)
+        public IEnumerable<KhachHang> GetKhachHangBySearchName(string name,string CityName, string sortBy)
         {
             /* var context = new MyStockContext();
              *//*var khachHangs = new List<KhachHang>();*//*
@@ -132,7 +132,12 @@ namespace DemoApproachLibrary.DataAccess
                 if (!String.IsNullOrEmpty(name))
                 {
                     model = model.Where(x => x.TenKhachHang.ToLower().Contains(name)).ToList();
-                    switch (sortBy)
+                }
+                if (!String.IsNullOrEmpty(CityName))
+                {
+                    model = model.Where(x => x.DiaChi.ToLower().Contains(CityName)).ToList();
+                
+                switch (sortBy)
                     {
                         case "name":
                             model = model.OrderBy(o => o.TenKhachHang).ToList();
@@ -244,6 +249,5 @@ namespace DemoApproachLibrary.DataAccess
             context.SaveChanges();
             return DeleteCatList;
         }
-    
-}
+    }
 }

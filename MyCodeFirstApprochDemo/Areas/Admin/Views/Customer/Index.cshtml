@@ -4,7 +4,7 @@
 @model IEnumerable<DemoApproachLibrary.DataAccess.KhachHang>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "QL Khách Hàng";
     Layout = "~/Areas/admin/Views/Shared/_Layout.cshtml";
 }
 <header class="panel-heading">
@@ -15,26 +15,36 @@
     <p>
         @Html.ActionLink("Tạo mới","Create","Customer", null, new {@class="btn btn-danger"})
     </p>
-    <div class="text-align">
-       @* @if (TempData["Message"] != null)
+   @* <div class="text-align">
+        @if (TempData["Message"] != null)
         {
             <div class="alert alert-danger">
 
                 @TempData["Message"]
             </div>
-        }*@
-    </div>
+        }
+    </div>*@
     <div class="row form-body">
         <div class="form-group mb-4">
         @using (Html.BeginForm("Index", "Customer", FormMethod.Get))
         {
-                <div class="row col-lg-6">
+                <div class="row col-lg-4">
                 @Html.TextBox("SearchString",null,null,new {@class="form-control", @placeholder="Nhập từ khoá cần tìm kiếm"})
             </div>
 
-            <div class="col-lg-6">
-                <input type="submit" class="btn btn-danger" value="Tìm kiếm" />
-            </div
+            <div class="col-lg-4">
+                <select id="CityId" name="CityName" class="form-control">
+                <option value="">-- Select City --</option>
+                        @foreach(var city in ViewBag.City as List<SelectListItem>)
+                        {
+                            @*city.Value*@
+                            <option value="@city.Text">@city.Text</option>
+                        }
+                </select>
+                </div>
+                <div class="col-lg-2">
+                       <input type="submit" class="btn btn-danger" value="Tìm kiếm" />
+                 </div
             <div style="clear: both"></div>
         }
         </div>

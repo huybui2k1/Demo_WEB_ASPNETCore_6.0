@@ -15,8 +15,6 @@ namespace MyCodeFirstApprochDemo.Areas.Admin.Controllers
             ViewData["Title"] = "Đăng nhập";
             return View();
         }
-
-
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]

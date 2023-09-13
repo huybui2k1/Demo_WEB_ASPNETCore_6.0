@@ -36,19 +36,6 @@ namespace DemoApproachLibrary.DataAccess
 
         public IEnumerable<NhanVien> GetNhanVienList(string sortBy)
         {
-            /*var khachHangs = new List<KhachHang>();
-            try
-            {
-                using var context = new MyStockContext();
-                khachHangs = context.KhachHangs.ToList();
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
-            return khachHangs;*/
-
-
             ///ham sort by name 
             using var context = new MyStockContext();
             List<NhanVien> model = context.NhanViens.ToList();
@@ -102,25 +89,6 @@ namespace DemoApproachLibrary.DataAccess
 
         public IEnumerable<NhanVien> GetNhanVienBySearchName(string name, string sortBy)
         {
-            /* var context = new MyStockContext();
-             *//*var khachHangs = new List<KhachHang>();*//*
-             IQueryable<KhachHang> model = context.KhachHangs;
-             try
-             {
-                 if (!String.IsNullOrEmpty(name))
-                 {
-                     model = model.Where(x => x.TenKhachHang.Contains(name));
-                 }
-                 else
-                 {
-                     return model;
-                 }
-             }
-             catch (Exception ex)
-             {
-                 throw new Exception(ex.Message);
-             }
-             return model;*/
 
             //ham sort by name  
             var context = new MyStockContext();
@@ -244,6 +212,5 @@ namespace DemoApproachLibrary.DataAccess
             context.SaveChanges();
             return DeleteCatList;
         }
-    
-}
+    }
 }
