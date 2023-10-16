@@ -1,19 +1,34 @@
 ﻿using DemoApproachLibrary.Repository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using MyCodeFirstApprochDemo.Areas.Admin.Models;
+using System.Data;
 using X.PagedList;
 
 namespace MyCodeFirstApprochDemo.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    public class UserController : Controller
+    [Authorize(Roles = "Admin")]
+    [Authorize(AuthenticationSchemes = "Admin")]
+    public class UserController : BaseController
     {
         INguoiDungRepository nguoiDungRepository = null;
         public UserController() => nguoiDungRepository = new NguoiDungRepository();
         // GET: UserController
-        public ActionResult Index(string searchString, int? page, string sortBy)
+        public ActionResult Index(string searchString,int UserType, int? page, string sortBy)
         {
-            var nguoiDungList = nguoiDungRepository.GetNguoiDungs(sortBy).ToPagedList(page ?? 1, 5);
+            /*var nguoiDungList = nguoiDungRepository.GetNguoiDungs(sortBy).ToPagedList(page ?? 1, 5);*/
+
+            var nguoiDungList = nguoiDungRepository.GetNguoiDungByNames(searchString is null ? null : searchString, UserType, sortBy).ToPagedList(page ?? 1, 5);
+
+            List<LoaiNguoiDung> list_NguoiDung = new List<LoaiNguoiDung>
+            {
+                new LoaiNguoiDung{Id=1,Name="Khách hàng", Color="Green"},
+                new LoaiNguoiDung{Id =2,Name="Nhân viên", Color = "Blue"},
+                new LoaiNguoiDung{Id =3,Name="Quản trị", Color = "Red"}
+            };
+            ViewBag.LoaiNguoiDung = list_NguoiDung;
             return View(nguoiDungList);
         }
 

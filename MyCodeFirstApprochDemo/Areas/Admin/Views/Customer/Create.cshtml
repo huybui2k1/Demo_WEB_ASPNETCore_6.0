@@ -6,20 +6,20 @@
 }
 
 <h1>Tạo mới khách hàng</h1>
-
-<hr />
+<div class="panel-body">
 <div class="row">
     <div class="col-md-4">
-        @using (Html.BeginForm("Tạo mới", "Customer", FormMethod.Post))
+        @using (Html.BeginForm("Create", "Customer", FormMethod.Post))
         {
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            @Html.ValidationSummary(true, "", new { @class = "alert alert-block alert-danger fade in" })
 
+@*
             <div class="form-group">
                 <label asp-for="MaKhachHang" class="control-label"></label>
                 @Html.EditorFor(model=>model.MaKhachHang,new {htmlAttributes= new{@class="form-control", @placeholder="Mời nhập mã khách hàng"} })
                 @Html.ValidationMessageFor(model=> model.MaKhachHang,"",new {@class = "text-danger"})
                 <span asp-validation-for="MaKhachHang" class="text-danger"></span>
-            </div>
+            </div>*@
             <div class="form-group">
                 <label asp-for="TenKhachHang" class="control-label"></label>
                 @Html.EditorFor(model=>model.TenKhachHang,new {htmlAttributes= new{@class="form-control", @placeholder="Mời nhập tên khách hàng"} })
@@ -39,17 +39,41 @@
                 <span asp-validation-for="DienThoai" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" onclick="return DisplayProgressMessage(this, 'Saving...');" value="Tạo mới" class="btn btn-primary" />
             </div>
             @* </form>*@
         }
     </div>
 </div>
-
+<div class="processing-preview hidden">
+</div>
 <div>
     @Html.ActionLink("Quay trở lại","Index","Customer",null, new {@class="btn btn-danger"})
 </div>
+</div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+
+    }
+    <script type="text/javascript">
+        function DisplayProgressMessage(ctl, msg) {
+            //if use the submit button, you can use event.preventDefault to prevent the default submit form behavior.
+            event.preventDefault();
+            // Turn off the "Save" button and change text
+            $(ctl).prop("disabled", true).val(msg);
+            // Gray out background on page
+            $("body").addClass("submit-progress-bg");
+            // Wrap in setTimeout so the UI can update the spinners
+            $(".processing-preview").removeClass("hidden");
+            //submit the form.
+            setTimeout(function () {
+                $("form").submit();
+            }, 1);
+            return true;
+        }
+    </script>
+
+
+    }

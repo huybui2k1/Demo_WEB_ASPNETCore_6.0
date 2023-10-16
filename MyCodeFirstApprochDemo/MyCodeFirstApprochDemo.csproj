@@ -608,6 +608,15 @@
     <None Include="wwwroot\Admin\js\toggle-init.js" />
     <None Include="wwwroot\Admin\js\tree.js" />
     <None Include="wwwroot\Admin\js\validation-init.js" />
+    <None Include="wwwroot\User\fonts\fontawesome-webfont.svg" />
+    <None Include="wwwroot\User\fonts\fontawesome-webfont.woff2" />
+    <None Include="wwwroot\User\fonts\slick.svg" />
+    <None Include="wwwroot\User\js\bootstrap.min.js" />
+    <None Include="wwwroot\User\js\jquery.min.js" />
+    <None Include="wwwroot\User\js\jquery.zoom.min.js" />
+    <None Include="wwwroot\User\js\main.js" />
+    <None Include="wwwroot\User\js\nouislider.min.js" />
+    <None Include="wwwroot\User\js\slick.min.js" />
   </ItemGroup>
 
   <ItemGroup>
@@ -628,6 +637,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Areas\User\Data\" />
+    <Folder Include="Areas\User\Models\" />
     <Folder Include="Pages\" />
   </ItemGroup>
 

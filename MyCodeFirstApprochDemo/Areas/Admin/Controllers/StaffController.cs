@@ -1,15 +1,19 @@
 ﻿using DemoApproachLibrary.DataAccess;
 using DemoApproachLibrary.Repository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Data;
 using System.Globalization;
 using X.PagedList;
 
 namespace MyCodeFirstApprochDemo.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    public class StaffController : Controller
+    [Authorize(Roles = "Admin")]
+    [Authorize(AuthenticationSchemes = "Admin")]
+    public class StaffController : BaseController
     {
         INhanVienRepository nhanVienRepository = null;
         public StaffController() => nhanVienRepository = new NhanVienRepository();

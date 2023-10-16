@@ -142,8 +142,8 @@ namespace DemoApproachLibrary.DataAccess
 
             try
             {
-                NhanVien _kh = GetNhanVienByID(kh.MaNhanVien);
-                if (_kh == null)
+                NhanVien nv = GetNhanVienByID(kh.MaNhanVien);
+                if (nv == null)
                 {
                     using var context = new MyStockContext();
                     context.NhanViens.Add(kh);

@@ -15,7 +15,6 @@ namespace DemoApproachLibrary.DataAccess
             : base(options)
         {
         }
-
         public virtual DbSet<Car> Cars { get; set; } = null!;
         public virtual DbSet<ChiTietHoaDon> ChiTietHoaDons { get; set; } = null!;
         public virtual DbSet<HangHoa> HangHoas { get; set; } = null!;

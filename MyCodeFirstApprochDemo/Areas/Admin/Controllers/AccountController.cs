@@ -10,6 +10,11 @@ namespace MyCodeFirstApprochDemo.Areas.Admin.Controllers
     [AllowAnonymous]
     public class AccountController : Controller
     {
+        public IActionResult Index()
+        {
+            ViewData["Title"] = "Đăng nhập";
+            return RedirectToAction("Login", "Account", new { Areas = "Admin" });
+        }
         public IActionResult Login()
         {
             ViewData["Title"] = "Đăng nhập";
@@ -53,7 +58,8 @@ namespace MyCodeFirstApprochDemo.Areas.Admin.Controllers
                 var routeValues = new RouteValueDictionary
                 {
                     {"area","Admin" },
-                    {"claimType","AdminClaim" },
+                    /*  {"claimType","AdminClaim" },*/
+                    { "returnURL",Request.Query["ReturnURL"]},
                     {"claimValue","true" }
                 };
                 return RedirectToAction("Index", "Home", routeValues);// RedirectToAction("Index", "Home");

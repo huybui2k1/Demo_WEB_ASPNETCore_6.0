@@ -1,14 +1,18 @@
 ﻿using DemoApproachLibrary.DataAccess;
 using DemoApproachLibrary.Repository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Data;
 using X.PagedList;
 
 namespace MyCodeFirstApprochDemo.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    public class CustomerController : Controller
+    [Authorize(Roles = "Admin")]
+    [Authorize(AuthenticationSchemes = "Admin")]
+    public class CustomerController : BaseController
     {
         IKhachHangRepository khachHangRepository = null;
         public CustomerController() => khachHangRepository = new KhachHangRepository();
@@ -57,14 +61,22 @@ namespace MyCodeFirstApprochDemo.Areas.Admin.Controllers
         {
             try
             {
-                khachHangRepository.InsertKhachHang(kh);
-                TempData["Message"] = "Tạo mới thành công";
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    khachHangRepository.InsertKhachHang(kh);
+                    SetAlert("Tạo mới thành công", "error");
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Tạo mới khách hàng không thành công");
+                }
             }
             catch
             {
-                return View();
+
             }
+            return View(kh);
         }
 
         // GET: CustomerController/Edit/5
@@ -92,9 +104,33 @@ namespace MyCodeFirstApprochDemo.Areas.Admin.Controllers
         }
 
         // GET: CustomerController/Delete/5
-        public ActionResult Delete(int id)
+        /*public ActionResult Delete(int id)
         {
             return View();
+        }*/
+
+        [HttpPost]
+        public JsonResult DeleteId(int id)
+        {
+            try
+            {
+                var record = khachHangRepository.GetKhachHangByID(id);
+                if (record == null)
+                {
+                    return Json(new { success = false, message = "Không tìm thấy bản ghi" });
+                }
+                khachHangRepository.DeleteKhachHang(id);
+                SetAlert("Xoá thành công", "error");
+                /*return Json(new { success = true, id = id});*/
+                return Json(new
+                {
+                    status = true
+                });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = ex.Message });
+            }
         }
 
         // POST: CustomerController/Delete/5
@@ -119,6 +155,24 @@ namespace MyCodeFirstApprochDemo.Areas.Admin.Controllers
             khachHangRepository.DeleteSelectedKhachHang(SelectedCatDelete);
             TempData["Message"] = $"Xoá {SelectedCatDelete.Count()} hàng thành công";
             return RedirectToAction("Index");
+        }
+        
+        public JsonResult ListName(string q)
+        {
+            if (!string.IsNullOrEmpty(q))
+            {
+                var data = khachHangRepository.GetKhachHangByName(q.ToLower(), "", "name");
+                var responseData = data.Select(kh => kh.TenKhachHang).ToList();
+                return Json(new
+                {
+                    data = responseData,
+                    status = true
+                });
+            }
+            return Json(new
+            {
+                status = false
+            });
         }
     }
 }

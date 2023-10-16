@@ -46,10 +46,11 @@ a,a:hover,a:focus {
 }
 /*login page*/
 .login-body {
-    background:#32323A;
-    background-size:cover;
-    width:100%;
-    height:100%;
+    background: url(../images/bglogin.png);
+    /*background:#32323A;*/
+    background-size: cover;
+    width: 100%;
+    height: 100%;
 }
 .form-signin {
     max-width:330px;
@@ -5709,4 +5710,18 @@ right: -1px;
     -ms-transition: none;
     -o-transition: none;
     transition: none;
+}
+.processing-preview {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    z-index: 1;
+    width: 32px;
+    height: 32px;
+    background: url(../images/loading.gif) center no-repeat;
+    background-size: contain;
+}
+.submit-progress-bg {
+    background-color: lightgray;
+    opacity: .5;
 }

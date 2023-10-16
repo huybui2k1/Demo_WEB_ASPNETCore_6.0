@@ -1,0 +1,123 @@
+﻿@model DemoApproachLibrary.DataAccess.HangHoa
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Areas/admin/Views/Shared/_Layout.cshtml";
+}
+<header class="panel-heading">
+    Tạo mới sản phẩm
+</header>
+<div class="processing-preview hidden">
+</div>
+<div class="panel-body">
+    <div class="row">
+        @using (Html.BeginForm("Create", "Product", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "alert alert-block alert-danger fade in" })
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label asp-for="TenHangHoa" class="control-label"></label>
+                    @Html.EditorFor(model=>model.TenHangHoa,new {htmlAttributes= new{@class="form-control", @placeholder="Mời nhập tên hàng hoá"} })
+                    @Html.ValidationMessageFor(model => model.TenHangHoa, "", new { @class =
+                "text-danger" })
+                </div>
+                <div class="form-group">
+                    <label asp-for="SoLuong" class="control-label"></label>
+
+                    @Html.EditorFor(model=>model.SoLuong,new {htmlAttributes= new{@class="form-control", @placeholder="Mời nhập số lượng hàng"} })
+                    @Html.ValidationMessageFor(model => model.SoLuong, "", new { @class =
+                "text-danger" })
+                </div>
+                <div class="form-group">
+                    <label asp-for="DonGiaNhap" class="control-label"></label>
+                    @Html.EditorFor(model=>model.DonGiaNhap,new {htmlAttributes= new{@class="DonGiaNhap form-control", @placeholder="Mời nhập đơn giá nhập"} })
+                    @Html.ValidationMessageFor(model => model.DonGiaNhap, "", new { @class ="text-danger" })
+                </div>
+                <div class="form-group">
+                    <label asp-for="DonGiaBan" class="control-label"></label>
+                    @Html.EditorFor(model=>model.DonGiaBan,new {htmlAttributes= new{@class="DonGiaBan form-control", @placeholder="Mời nhập đơn giá bán"} })
+                    @Html.ValidationMessageFor(model => model.DonGiaBan, "", new { @class =
+                "text-danger" })
+                </div>
+                <div class="form-group">
+                    @Html.EditorFor(model=>model.GhiChu,new {htmlAttributes= new{@class="form-control", @placeholder="Mời nhập thông tin ghi chú"} })
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Tạo mới" onclick="return DisplayProgressMessage(this, 'Saving...');" class="btn btn-primary" />
+                </div>
+            </div>
+
+            <div class="col-md-6 ">
+                <img id="preview" src="@Url.Content(ViewBag.Anh==null?"~/Admin/images/avatar1_small.jpg":"~/Upload/images/"+ViewBag.Anh)" class="rounded-circle" height="40" width="40" />
+                @Html.EditorFor(model=>model.ImageFile,new {htmlAttributes= new{@class="custom-file-input"}})
+                @*  <label class="custom-file-label" for="customFile">Choose file</label>
+            *@
+            </div>
+        }
+    </div>
+</div>
+</div>
+<div>
+    <div>
+        @Html.ActionLink("Quay trở lại","Index","Product",null, new {@class="btn btn-danger"})
+
+    </div>
+</div>
+</div>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script src="~/admin/js/controller/productcontroller.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/cleave.js/1.6.0/cleave.min.js"></script>
+    <script>
+        function DisplayProgressMessage(ctl, msg) {
+            //if use the submit button, you can use event.preventDefault to prevent the default submit form behavior.
+            event.preventDefault();
+            // Turn off the "Save" button and change text
+            $(ctl).prop("disabled", true).val(msg);
+            // Gray out background on page
+            $("body").addClass("submit-progress-bg");
+            // Wrap in setTimeout so the UI can update the spinners
+            $(".processing-preview").removeClass("hidden");
+            //submit the form.
+            setTimeout(function () {
+                $("form").submit();
+                $(".processing-preview").addClass("hidden");
+                $("body").removeClass("submit-progress-bg");
+                $(ctl).prop("disabled", false).val("Tạo mới");
+            }, 1);
+            return false;
+        }
+        var cleaveOptions = {
+            numeral: true,
+            numeralThousandsGroupStyle: 'thousand',
+            numeralPositiveOnly: true
+        };
+
+        var donGiaNhapInput = document.querySelector('.DonGiaNhap');
+        var donGiaBanInput = document.querySelector('.DonGiaBan');
+
+        var cleaveNhap = new Cleave(donGiaNhapInput, cleaveOptions);
+        var cleaveBan = new Cleave(donGiaBanInput, cleaveOptions);
+        <script>
+
+
+            ImageFile.onchange = evt => {
+
+                const [file] = ImageFile.files
+
+                if (file) {
+
+                    preview.src = URL.createObjectURL(file);
+
+
+                }
+
+            }
+
+    </script>
+}
+
+
+

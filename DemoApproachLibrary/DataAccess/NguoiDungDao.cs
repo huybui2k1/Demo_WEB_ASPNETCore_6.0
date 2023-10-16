@@ -34,20 +34,33 @@ namespace DemoApproachLibrary.DataAccess
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
 
-        public IEnumerable<NguoiDung> GetNguoiDungList(string sortBy)
+        public IEnumerable<NguoiDungViewModel> GetNguoiDungList(string sortBy)
         {
             ///ham sort by name 
             using var context = new MyStockContext();
-            List<NguoiDung> model = context.NguoiDungs.ToList();
+            var model
+    = from u in context.NguoiDungs
+      where u.LoaiNguoiDung == 1 || u.LoaiNguoiDung == 2
+      select new NguoiDungViewModel
+      {
+          TenDangNhap = u.TenDangNhap,
+          LoaiNguoiDung = u.LoaiNguoiDung,
+          MaNguoiDung = u.LoaiNguoiDung == 1 ? "KH0" + u.MaNguoiDung : "NV0" + u.MaNguoiDung,
+          TenNguoiDung = u.LoaiNguoiDung == 1 ? context.KhachHangs.FirstOrDefault(c => c.MaKhachHang == u.MaNguoiDung).TenKhachHang : context.NhanViens.FirstOrDefault(n => n.MaNhanVien == u.MaNguoiDung).TenNhanVien,
+          GioiTinh = u.Status
+      };
+
+
+            //List<NguoiDung> model = context.NguoiDungs.ToList();
             try
             {
                 switch (sortBy)
                 {
                     case "name":
-                        model = model.OrderBy(o => o.TenDangNhap).ToList();
+                        model = model.OrderBy(o => o.TenDangNhap);
                         break;
                     case "namedesc":
-                        model = model.OrderByDescending(o => o.TenDangNhap).ToList();
+                        model = model.OrderByDescending(o => o.TenDangNhap);
                         break;
                     default:
                         break;
@@ -57,8 +70,79 @@ namespace DemoApproachLibrary.DataAccess
             {
                 throw new Exception(ex.Message);
             }
-            return model;
+            return model.ToList();
         }
+
+
+        /*List<NguoiDungViewModel> model = context.NguoiDungs.ToList();
+        try
+        {
+            switch (sortBy)
+            {
+                case "name":
+                    model = model.OrderBy(o => o.TenDangNhap).ToList();
+                    break;
+                case "namedesc":
+                    model = model.OrderByDescending(o => o.TenDangNhap).ToList();
+                    break;
+                default:
+                    break;
+            }
+        }
+        catch (Exception ex)
+        {
+            throw new Exception(ex.Message);
+        }
+        return model;
+    }*/
+
         #endregion
+        public IEnumerable<NguoiDungViewModel> GetNguoiDungByNames(string name, int userType, string sortBy)
+        {
+            using var context = new MyStockContext();
+            var model
+    = from u in context.NguoiDungs
+      where u.LoaiNguoiDung == 1 || u.LoaiNguoiDung == 2 || u.LoaiNguoiDung == 3
+      select new NguoiDungViewModel
+      {
+          TenDangNhap = u.TenDangNhap,
+          LoaiNguoiDung = u.LoaiNguoiDung,
+          MaNguoiDung = u.LoaiNguoiDung == 1 ? "KH0" + u.MaNguoiDung : "NV0" + u.MaNguoiDung,
+          TenNguoiDung = u.LoaiNguoiDung == 1 ? context.KhachHangs.FirstOrDefault(c => c.MaKhachHang == u.MaNguoiDung).TenKhachHang : u.LoaiNguoiDung == 2 ? context.NhanViens.FirstOrDefault(n => n.MaNhanVien == u.MaNguoiDung).TenNhanVien : "Admin",
+          GioiTinh = u.Status
+      };
+
+
+            //List<NguoiDung> model = context.NguoiDungs.ToList();
+            try
+            {
+                if (!String.IsNullOrEmpty(name))
+                {
+                    model = model.Where(x => x.TenNguoiDung.ToLower().Contains(name));
+                }
+                if (userType != 0)
+                {
+                    model = model.Where(x => x.LoaiNguoiDung == userType);
+                }
+                switch (sortBy)
+                {
+                    case "name":
+                        model = model.OrderBy(o => o.TenNguoiDung);
+                        break;
+                    case "namedesc":
+                        model = model.OrderByDescending(o => o.TenNguoiDung);
+                        break;
+                    default:
+                        break;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            return model.ToList();
+        }
     }
+
+
 }

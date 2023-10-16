@@ -1,0 +1,124 @@
+﻿@using X.PagedList.Mvc.Core;
+@using X.PagedList;
+@model IEnumerable<DemoApproachLibrary.DataAccess.HangHoa>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/admin/Views/Shared/_Layout.cshtml";
+}
+<header class="panel-heading">
+    Quản lý Hàng hoá
+</header>
+<div class="panel-body">
+    <p>
+        @Html.ActionLink("Tạo mới","Create","Product", null, new {@class="btn btn-danger"})
+    </p>
+    <div class="text-align">
+        @if (TempData["AlertMessage"] != null)
+        {
+            <div id="AlertBox" class="alert @TempData["AlertType"]">
+
+                @TempData["AlertMessage"]
+            </div>
+        }
+    </div>
+    <div class="row form-body">
+        <div class="form-group mb-4">
+        @using (Html.BeginForm("Index", "Product", FormMethod.Get))
+        {
+                <div class="row col-lg-4">
+                @Html.TextBox("SearchString", Context.Request.Query["SearchString"],null,new {@class="form-control", @placeholder="Nhập từ khoá cần tìm kiếm"})
+            </div>
+            <div class="col-lg-2">
+                <input type="submit" onclick="return DisplayProgressMessage(this, 'Searching...');"  class="btn btn-danger" value="Tìm kiếm" />
+            </div
+            <div style="clear: both"></div>
+        }
+        </div>
+        <div class="form-group">
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.MaHangHoa)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TenHangHoa)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SoLuong)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DonGiaNhap)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DonGiaBan)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Anh)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.GhiChu)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.MaHangHoa)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TenHangHoa)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SoLuong)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DonGiaNhap)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DonGiaBan)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Anh)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.GhiChu)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+</div>
+<div class="form-group">
+    @Html.PagedListPager((IPagedList) Model, page => Url.Action("Index", new {page = page,
+    SearchString = @Context.Request.Query["SearchString"],sortby = @Context.Request.Query["sortby"]}),
+    new X.PagedList.Web.Common.PagedListRenderOptions {
+    LiElementClasses = new string[] {"page-item"},
+    PageClasses = new string[] { "page-link" }
+    })
+</div>
+</div>
+</div>
+@*@section Scripts{
+
+     <script type="text/javascript" src="~/Scripts/jquery-ui.js"></script>
+ 
+   <script src="~/admin/js/controller/productcontroller.js"></script>
+   <script>
+        var inputElements = document.querySelectorAll('.my-input');
+        Array.from(inputElements).forEach(function (element) {
+            new Cleave(element, {
+                numeral: true,
+                numeralDecimalScale: 4
+            });
+        });
+   </script>
+}*@

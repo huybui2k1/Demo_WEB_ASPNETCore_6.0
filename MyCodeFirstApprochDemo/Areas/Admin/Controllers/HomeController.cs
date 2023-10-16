@@ -20,9 +20,14 @@ namespace MyCodeFirstApprochDemo.Areas.Admin.Controllers
         
         public IActionResult Index()
         {
-           /* var user = User as ClaimsPrincipal;
-            var userName = user?.FindFirstValue(ClaimTypes.Name);
-            ViewData["MessageInfo"] = userName;*/
+            /* var user = User as ClaimsPrincipal;
+             var userName = user?.FindFirstValue(ClaimTypes.Name);
+             ViewData["MessageInfo"] = userName;*/
+
+            if (!string.IsNullOrEmpty(Request.Query["ReturnURL"])){
+
+                return Redirect("" + Request.Query["ReturnURL"]);
+            }
             return View();
         }
        
